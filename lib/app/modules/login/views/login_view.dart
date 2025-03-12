@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:lottie/lottie.dart';
@@ -31,6 +30,8 @@ class LoginView extends GetView<LoginController> {
                   border: OutlineInputBorder(),
                   labelText: 'Email',
                   hintText: 'Masukan Email',
+                  filled: true,
+                  fillColor: Colors.white,
                 ),
               ),
             ),
@@ -48,6 +49,8 @@ class LoginView extends GetView<LoginController> {
                   border: OutlineInputBorder(),
                   labelText: 'Password',
                   hintText: 'Masukan Password',
+                  filled: true,
+                  fillColor: Colors.white,
                 ),
               ),
             ),
