@@ -34,7 +34,12 @@ class LoginController extends GetxController {
     });
 
     if (response.statusCode == 200) {
-      authToken.write('token', response.body['token']);
+      authToken.write('auth_token', response.body['access_token']);
+      authToken.write('user_id', response.body['user']['id']); // Simpan user ID
+
+      print("Debug: Token -> ${response.body['access_token']}");
+      print("Debug: User ID -> ${response.body['user']['id']}");
+
       Get.offAll(() => const DashboardView());
     } else {
       Get.snackbar(

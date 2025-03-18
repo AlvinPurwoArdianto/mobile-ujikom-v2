@@ -18,7 +18,7 @@ class LoginView extends GetView<LoginController> {
             Padding(
               padding: const EdgeInsets.only(top: 70.0),
               child: Lottie.asset(
-                'assets/lottie/unscreen.json',
+                'assets/lottie/fabas-unscreen.json',
                 fit: BoxFit.cover,
               ),
             ),

@@ -22,7 +22,7 @@ class HomeView extends GetView<HomeController> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Lottie.asset(
-              'assets/lottie/unscreen.json',
+              'assets/lottie/fabas-unscreen.json',
               fit: BoxFit.cover,
             ),
             const SizedBox(

@@ -6,45 +6,55 @@ import 'package:mobile_ujikom/app/utils/api.dart';
 class ProfileController extends GetxController {
   final box = GetStorage();
   final _getConnect = GetConnect();
-  final token = GetStorage().read('token');
-  final isLoading = false.obs;
 
-  @override
-  void onInit() {
-    super.onInit();
+  Future<String?> getToken() async {
+    return await box.read('auth_token');
   }
 
-  @override
-  void onReady() {
-    super.onReady();
+  Future<int?> getUserId() async {
+    return await box.read('user_id');
   }
 
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
-  Future<ProfileResponse> getProfile() async {
+  Future<ProfileResponse?> getProfile() async {
     try {
+      String? token = await getToken();
+      int? id = await getUserId(); // Ambil ID dari storage
+
+      print("Debug: Token -> $token");
+      print("Debug: User ID -> $id");
+
+      if (token == null) {
+        throw Exception("Token tidak ditemukan, silakan login ulang.");
+      }
+      if (id == null) {
+        throw Exception("ID pengguna tidak ditemukan, silakan login ulang.");
+      }
+
       final response = await _getConnect.get(
-        BaseUrl.profile,
+        "${BaseUrl.profile}/$id", // Gunakan ID dari storage
         headers: {'Authorization': "Bearer $token"},
         contentType: "application/json",
       );
 
+      print("Response Status Code: ${response.statusCode}");
+      print("Response Body: ${response.body}");
+
       if (response.statusCode == 200) {
         return ProfileResponse.fromJson(response.body);
+      } else if (response.statusCode == 401) {
+        logout();
+        throw Exception("Sesi berakhir, silakan login kembali.");
       } else {
-        throw Exception("Failed to load profile: ${response.statusText}");
+        throw Exception("Gagal mengambil profil: ${response.statusText}");
       }
     } catch (e) {
-      print("Error: $e");
-      rethrow;
+      print("Error saat mengambil profil: $e");
+      return null;
     }
   }
 
   void logout() {
-    box.remove('token');
+    box.erase(); // Hapus semua data sesi
     Get.offAllNamed('/login');
   }
 }

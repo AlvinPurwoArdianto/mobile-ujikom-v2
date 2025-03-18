@@ -6,10 +6,9 @@ import 'package:mobile_ujikom/app/modules/profile/controllers/profile_controller
 
 class ProfileView extends GetView<ProfileController> {
   @override
-  final ProfileController controller = Get.put(ProfileController());
-
-  @override
   Widget build(BuildContext context) {
+    final ProfileController controller = Get.put(ProfileController());
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Profile'),
@@ -25,10 +24,7 @@ class ProfileView extends GetView<ProfileController> {
                 confirmTextColor: Colors.white,
                 onConfirm: () {
                   controller.logout();
-                  Get.back(); // Menutup dialog setelah logout
-                },
-                onCancel: () {
-                  Get.back(); // Menutup dialog jika batal
+                  Get.back();
                 },
               );
             },
@@ -38,7 +34,7 @@ class ProfileView extends GetView<ProfileController> {
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
-          child: FutureBuilder<ProfileResponse>(
+          child: FutureBuilder<ProfileResponse?>(
             future: controller.getProfile(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
@@ -46,38 +42,64 @@ class ProfileView extends GetView<ProfileController> {
                   child: Lottie.network(
                     'https://gist.githubusercontent.com/olipiskandar/4f08ac098c81c32ebc02c55f5b11127b/raw/6e21dc500323da795e8b61b5558748b5c7885157/loading.json',
                     repeat: true,
-                    width: MediaQuery.of(context).size.width / 1,
-                    errorBuilder: (context, error, stackTrace) {
-                      return const Text("Loading animation failed");
-                    },
+                    width: MediaQuery.of(context).size.width / 1.5,
                   ),
                 );
               }
 
-              if (snapshot.hasError) {
+              if (snapshot.hasError || snapshot.data == null) {
                 return const Center(
-                  child: Text("Failed to load profile"),
+                  child: Text("Gagal memuat profil"),
                 );
               }
 
-              final data = snapshot.data?.data;
-
+              final data = snapshot.data!.data;
               if (data == null || data.email == null || data.email!.isEmpty) {
-                return const Center(child: Text("No profile data available"));
+                return const Center(child: Text("Data profil tidak tersedia"));
               }
 
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const SizedBox(height: 8),
-                  Text(
-                    "${data.namaPegawai}", // Menggunakan namaPegawai dari model Data
-                    style: const TextStyle(
-                        fontSize: 18, fontWeight: FontWeight.bold),
+              return Card(
+                elevation: 4,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const Icon(
+                        Icons.account_circle,
+                        size: 80,
+                        color: Colors.blue,
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        data.namaPegawai ?? "Nama Tidak Tersedia",
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        data.email ?? "Email Tidak Tersedia",
+                        style: const TextStyle(fontSize: 16),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        "Status Pegawai: ${data.statusPegawai == 1 ? "Aktif" : "Tidak Aktif"}",
+                        style: const TextStyle(fontSize: 14),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        "Bergabung Sejak: ${data.tanggalMasuk ?? "-"}",
+                        style: const TextStyle(fontSize: 14),
+                      ),
+                    ],
                   ),
-                  const SizedBox(height: 8),
-                  Text("${data.email}"),
-                ],
+                ),
               );
             },
           ),

@@ -12,7 +12,7 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     _pindah = Timer.periodic(
-      const Duration(seconds: 2),
+      const Duration(seconds: 4),
       (timer) => authToken.read('token') == null
           ? Get.off(
               () => const LoginView(),
