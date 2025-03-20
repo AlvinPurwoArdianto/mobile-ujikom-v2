@@ -8,7 +8,6 @@ abstract class Routes {
   static const DASHBOARD = _Paths.DASHBOARD;
   static const ABSENSI = _Paths.ABSENSI;
   static const PROFILE = _Paths.PROFILE;
-  static const ABSENSI = _Paths.ABSENSI;
   static const PENGAJUAN = _Paths.PENGAJUAN;
 }
 
@@ -19,6 +18,5 @@ abstract class _Paths {
   static const DASHBOARD = '/dashboard';
   static const ABSENSI = '/absensi';
   static const PROFILE = '/profile';
-  static const ABSENSI = '/absensi';
   static const PENGAJUAN = '/pengajuan';
 }

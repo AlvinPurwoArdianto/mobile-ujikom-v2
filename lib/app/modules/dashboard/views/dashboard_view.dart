@@ -29,10 +29,20 @@ class DashboardView extends GetView<DashboardController> {
                   ),
                 );
           },
+          selectedItemColor: Colors.blue,
+          unselectedItemColor: Colors.grey,
           items: const [
             BottomNavigationBarItem(
               icon: Icon(Icons.home),
               label: 'Dashboard',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.schedule),
+              label: 'Absensi',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.date_range),
+              label: 'Pengajuan Cuti',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.person),
