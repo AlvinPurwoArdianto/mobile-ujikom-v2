@@ -1,7 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart'; // Pastikan ImagePicker sudah diimpor
+import 'dart:io'; // Untuk penggunaan File
 
-class IndexView extends StatelessWidget {
+class IndexView extends StatefulWidget {
   const IndexView({super.key});
+
+  @override
+  _IndexViewState createState() => _IndexViewState();
+}
+
+class _IndexViewState extends State<IndexView> {
+  File? _image; // Variabel untuk menyimpan gambar yang dipilih
+
+  final ImagePicker _picker = ImagePicker(); // Controller untuk ImagePicker
+
+  // Fungsi untuk memilih gambar
+  Future<void> _pickImage() async {
+    final XFile? pickedFile =
+        await _picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      setState(() {
+        _image = File(pickedFile.path);
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,6 +66,31 @@ class IndexView extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
+
+            // Tombol Absen
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ElevatedButton(
+                  onPressed: () => Get.snackbar(
+                      "Absen Masuk", "Anda telah absen masuk.",
+                      snackPosition: SnackPosition.BOTTOM),
+                  child: const Text("Absen Masuk"),
+                ),
+                ElevatedButton(
+                  onPressed: () => Get.snackbar(
+                      "Absen Pulang", "Anda telah absen pulang.",
+                      snackPosition: SnackPosition.BOTTOM),
+                  child: const Text("Absen Pulang"),
+                ),
+                ElevatedButton(
+                  onPressed: _showUploadDialog,
+                  child: const Text("Absen Sakit"),
+                ),
+              ],
+            ),
+            const SizedBox(height: 20),
+
             // Kalender
             Expanded(
               child: Card(
@@ -92,6 +141,48 @@ class IndexView extends StatelessWidget {
     );
   }
 
+  // Modal untuk mengunggah surat sakit
+  void _showUploadDialog() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text("Upload Bukti Sakit"),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              _image != null
+                  ? Image.file(_image!, height: 100)
+                  : const Text("Pilih gambar untuk diunggah"),
+              const SizedBox(height: 10),
+              ElevatedButton(
+                onPressed: _pickImage,
+                child: const Text("Pilih Gambar"),
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text("Batal"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                if (_image != null) {
+                  Get.snackbar("Berhasil", "Bukti sakit telah diunggah.",
+                      snackPosition: SnackPosition.BOTTOM);
+                  Navigator.pop(context);
+                }
+              },
+              child: const Text("Upload"),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  // Row Info untuk Card
   Widget _infoRow(IconData icon, String label, String value) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4.0),
