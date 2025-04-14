@@ -74,9 +74,9 @@ class Data {
       jenisKelamin: json['jenis_kelamin'],
       alamat: json['alamat'],
       tanggalMasuk: json['tanggal_masuk'],
-      gaji: (json['gaji'] as num?)?.toDouble(), // ✅ Aman untuk int dan double
+      gaji: (json['gaji'] as num?)?.toDouble(),
       statusPegawai: json['status_pegawai'],
-      idJabatan: json['id_jabatan'], // ✅ Bisa null
+      idJabatan: json['id_jabatan'],
       provinsi: json['provinsi'],
       kabupaten: json['kabupaten'],
       kecamatan: json['kecamatan'],

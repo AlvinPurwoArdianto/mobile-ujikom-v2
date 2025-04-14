@@ -3,4 +3,5 @@ class BaseUrl {
 
   static String login = "$url/login";
   static String profile = "$url/profile";
+  static String cuti = "$url/cuti";
 }

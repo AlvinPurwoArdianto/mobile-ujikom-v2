@@ -18,7 +18,7 @@ class ProfileController extends GetxController {
   Future<ProfileResponse?> getProfile() async {
     try {
       String? token = await getToken();
-      int? id = await getUserId(); // Ambil ID dari storage
+      int? id = await getUserId();
 
       print("Debug: Token -> $token");
       print("Debug: User ID -> $id");
@@ -31,7 +31,7 @@ class ProfileController extends GetxController {
       }
 
       final response = await _getConnect.get(
-        "${BaseUrl.profile}/$id", // Gunakan ID dari storage
+        "${BaseUrl.profile}/$id",
         headers: {'Authorization': "Bearer $token"},
         contentType: "application/json",
       );

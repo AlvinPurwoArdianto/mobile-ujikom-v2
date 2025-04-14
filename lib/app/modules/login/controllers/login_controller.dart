@@ -28,14 +28,20 @@ class LoginController extends GetxController {
   }
 
   void loginNow() async {
-    final response = await _getConnect.post(BaseUrl.login, {
-      'email': emailController.text,
-      'password': passwordController.text,
-    });
+    final response = await _getConnect.post(
+      BaseUrl.login,
+      {
+        'email': emailController.text,
+        'password': passwordController.text,
+      },
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    );
 
     if (response.statusCode == 200) {
       authToken.write('auth_token', response.body['access_token']);
-      authToken.write('user_id', response.body['user']['id']); // Simpan user ID
+      authToken.write('user_id', response.body['user']['id']);
 
       print("Debug: Token -> ${response.body['access_token']}");
       print("Debug: User ID -> ${response.body['user']['id']}");
