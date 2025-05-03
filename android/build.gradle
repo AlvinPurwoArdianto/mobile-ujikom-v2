@@ -17,8 +17,15 @@ tasks.register("clean", Delete) {
     delete rootProject.buildDir
 }
 
+// ✅ Tambahkan repositories DI DALAM buildscript
 buildscript {
     ext.kotlin_version = '1.8.22' // Sesuaikan dengan versi yang kompatibel dengan Flutter
+
+    repositories {
+        google()
+        mavenCentral()
+    }
+
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }

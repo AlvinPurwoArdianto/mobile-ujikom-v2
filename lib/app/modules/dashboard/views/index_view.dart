@@ -72,7 +72,7 @@ class _IndexViewState extends State<IndexView> {
       return;
     }
 
-    final url = 'http://127.0.0.1:8000/api/profile';
+    final url = 'http://192.168.17.67:8000/api/profile';
 
     try {
       final response = await http.get(
@@ -83,7 +83,7 @@ class _IndexViewState extends State<IndexView> {
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
         setState(() {
-          _namaPegawai = data['name'] ?? 'Nama tidak ditemukan';
+          _namaPegawai = data['namaPegawai'] ?? 'Nama tidak ditemukan';
           _userId = data['id']?.toString();
         });
         _fetchMonthlyAbsensi();
@@ -106,7 +106,7 @@ class _IndexViewState extends State<IndexView> {
     if (_userId == null) return;
 
     final url =
-        'http://127.0.0.1:8000/api/absensi/monthly/${_currentDate.year}/${_currentDate.month}/${_userId}';
+        'http://192.168.17.67:8000/api/absensi/monthly/${_currentDate.year}/${_currentDate.month}/${_userId}';
 
     try {
       final response = await http.get(
@@ -139,7 +139,7 @@ class _IndexViewState extends State<IndexView> {
   Future<void> _fetchAbsensiList() async {
     if (_userId == null) return;
 
-    final url = 'http://127.0.0.1:8000/api/absensi/list/${_userId}';
+    final url = 'http://192.168.17.67:8000/api/absensi/list/${_userId}';
 
     try {
       final response = await http.get(
@@ -165,7 +165,7 @@ class _IndexViewState extends State<IndexView> {
     if (_userId == null) return;
 
     final today = DateTime.now().toString().split(' ')[0]; // Format: YYYY-MM-DD
-    final url = 'http://127.0.0.1:8000/api/absensi/check/$today/${_userId}';
+    final url = 'http://192.168.17.67:8000/api/absensi/check/$today/${_userId}';
 
     try {
       final response = await http.get(
@@ -259,7 +259,7 @@ class _IndexViewState extends State<IndexView> {
       return;
     }
 
-    final url = 'http://127.0.0.1:8000/api/absensi';
+    final url = 'http://192.168.17.67:8000/api/absensi';
 
     try {
       final response = await http.post(
@@ -312,7 +312,7 @@ class _IndexViewState extends State<IndexView> {
       return;
     }
 
-    final url = 'http://127.0.0.1:8000/api/absensi/${_absensiId}';
+    final url = 'http://192.168.17.67:8000/api/absensi/${_absensiId}';
 
     try {
       final response = await http.put(
@@ -360,7 +360,7 @@ class _IndexViewState extends State<IndexView> {
       return;
     }
 
-    final url = 'http://127.0.0.1:8000/api/absensi/sakit';
+    final url = 'http://192.168.17.67:8000/api/absensi/sakit';
 
     try {
       // Membuat request multipart untuk upload gambar

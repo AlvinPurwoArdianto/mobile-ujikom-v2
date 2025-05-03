@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class LaporanView extends StatelessWidget {
   const LaporanView({super.key});
@@ -53,21 +52,7 @@ class LaporanView extends StatelessWidget {
                 },
               ),
             ),
-
             // Tombol untuk menambahkan laporan cuti baru
-            ElevatedButton(
-              onPressed: () {
-                _showTambahLaporanCutiDialog(context);
-              },
-              child: const Text("Tambah Laporan Cuti Baru"),
-              style: ElevatedButton.styleFrom(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-            ),
           ],
         ),
       ),
@@ -92,50 +77,5 @@ class LaporanView extends StatelessWidget {
       },
     );
   }
-
   // Fungsi untuk menampilkan dialog tambah laporan cuti
-  void _showTambahLaporanCutiDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: const Text('Tambah Laporan Cuti Baru'),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextField(
-                decoration: const InputDecoration(
-                  hintText: 'Masukkan alasan cuti...',
-                ),
-                maxLines: 3,
-              ),
-              const SizedBox(height: 10),
-              TextField(
-                decoration: const InputDecoration(
-                  hintText: 'Masukkan tanggal cuti (misal: 01/01/2023)',
-                ),
-                keyboardType: TextInputType.datetime,
-              ),
-            ],
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: const Text("Batal"),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                // Logic untuk menambahkan laporan cuti baru
-                Get.snackbar("Laporan Cuti Ditambahkan",
-                    "Laporan cuti baru berhasil ditambahkan.",
-                    snackPosition: SnackPosition.BOTTOM);
-                Navigator.pop(context); // Menutup dialog
-              },
-              child: const Text("Tambah"),
-            ),
-          ],
-        );
-      },
-    );
-  }
 }

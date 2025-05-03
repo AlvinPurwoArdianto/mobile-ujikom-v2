@@ -47,20 +47,24 @@ class LoginController extends GetxController {
       print("Debug: User ID -> ${response.body['user']['id']}");
 
       Get.offAll(() => const DashboardView());
-    } else {
-      Get.snackbar(
-        'Error',
-        response.body['error'].toString(),
-        icon: const Icon(Icons.error),
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-        forwardAnimationCurve: Curves.bounceIn,
-        margin: const EdgeInsets.only(
-          top: 10,
-          left: 5,
-          right: 5,
-        ),
-      );
-    }
+    }else {
+    final errorMessage = response.body != null
+        ? (response.body['error'] ?? response.body['message'] ?? 'Login gagal.')
+        : 'Terjadi kesalahan.';
+
+    Get.snackbar(
+      'Error',
+      errorMessage,
+      icon: const Icon(Icons.error),
+      backgroundColor: Colors.red,
+      colorText: Colors.white,
+      forwardAnimationCurve: Curves.bounceIn,
+      margin: const EdgeInsets.only(
+        top: 10,
+        left: 5,
+        right: 5,
+      ),
+    );
+  }
   }
 }

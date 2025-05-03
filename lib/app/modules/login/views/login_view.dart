@@ -14,7 +14,7 @@ class LoginView extends GetView<LoginController> {
 
     return Scaffold(
       backgroundColor:
-          HexColor("#4070f4"), // Background color like the blue in your HTML
+          HexColor("#4070f4"),
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

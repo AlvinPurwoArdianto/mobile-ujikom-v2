@@ -193,7 +193,7 @@ class _PengajuanViewState extends State<PengajuanView> {
                           setState(() => _selectedCategory = value as String),
                     ),
                     RadioListTile(
-                      title: const Text("Hamil (Khusus Wanita)"),
+                      title: const Text("Melahirkan"),
                       value: "Hamil",
                       groupValue: _selectedCategory,
                       onChanged: (value) =>

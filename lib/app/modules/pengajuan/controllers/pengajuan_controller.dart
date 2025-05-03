@@ -26,7 +26,7 @@ class PengajuanController extends GetxController {
 
   // Fungsi untuk login
   Future<String?> login(String email, String password) async {
-    final String baseUrl = 'http://127.0.0.1:8000/api';
+    final String baseUrl = 'http://192.168.17.67:8000/api';
 
     try {
       final response = await http.post(
@@ -76,7 +76,7 @@ class PengajuanController extends GetxController {
     // Convert kategori
     String apiCategory = mapCategoryToApi(category);
 
-    final String baseUrl = 'http://127.0.0.1:8000/api';
+    final String baseUrl = 'http://192.168.17.67:8000/api';
 
     try {
       final response = await http.post(
